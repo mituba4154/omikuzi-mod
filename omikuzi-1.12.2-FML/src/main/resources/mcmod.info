@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
+  "modid": "omikuzimod",
+  "name": "omikuzi-FML",
+  "description": "It's a mod that allows you to draw a fortune!.",
+  "version": "$Alpha-0.1",
   "mcversion": "${mcversion}",
-  "url": "",
+  "url": "https://github.com/mituba4154/1.12.2omikuzi",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["mituba4154,gomadare"],
+  "credits": " ",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
