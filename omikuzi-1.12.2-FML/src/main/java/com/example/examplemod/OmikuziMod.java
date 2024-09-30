@@ -13,7 +13,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.RegistryEvent.Register;
 import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,11 +38,20 @@ public class OmikuziMod {
 
     // アイテムのインスタンスを静的フィールドとして定義
     public static final Item OMIKUZI_MOD_ITEM = new OmikuziModItem();
+    public static final Item HUNDRED_YEN_ITEM = new HundredYenItem();
 
     public static class OmikuziModItem extends Item {
         public OmikuziModItem() {
             setRegistryName(MODID, "omikuzi");
             setUnlocalizedName("omikuzi");
+            setCreativeTab(OMIKUZI_TAB);
+        }
+    }
+
+    public static class HundredYenItem extends Item {
+        public HundredYenItem() {
+            setRegistryName(MODID, "100yen");
+            setUnlocalizedName("100yen");
             setCreativeTab(OMIKUZI_TAB);
         }
     }
@@ -65,8 +74,11 @@ public class OmikuziMod {
     }
 
     @SubscribeEvent
-    public void registerItems(RegistryEvent.Register<Item> event) {
-        event.getRegistry().register(OMIKUZI_MOD_ITEM);
+    public void registerItems(Register<Item> event) {
+        event.getRegistry().registerAll(
+                OMIKUZI_MOD_ITEM,
+                HUNDRED_YEN_ITEM
+        );
     }
 
     @SubscribeEvent
@@ -74,5 +86,7 @@ public class OmikuziMod {
     public void registerModels(ModelRegistryEvent event) {
         ModelLoader.setCustomModelResourceLocation(OMIKUZI_MOD_ITEM, 0,
                 new ModelResourceLocation(MODID + ":omikuzi", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(HUNDRED_YEN_ITEM, 0,
+                new ModelResourceLocation(MODID + ":100yen", "inventory"));
     }
 }
