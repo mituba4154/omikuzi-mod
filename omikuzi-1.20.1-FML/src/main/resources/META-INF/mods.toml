@@ -1,12 +1,77 @@
-modLoader="javafml"
-loaderVersion="[47,)"
-license="MIT"
+# mods.toml
 
+# MODローダーとしてJava FML (Forge Mod Loader) を使用することを指定
+modLoader="javafml" #mandatory
+
+# このMODが動作するために必要なForgeのバージョン範囲を指定
+# "[47,)" は Forge 47.0.0 以降を意味します (1.20.1 の Forge は 47.x.x なので適切)
+loaderVersion="[47,)" #mandatory
+
+# このMODのライセンスを指定 (例: "MIT", "All Rights Reserved", "Apache-2.0" など)
+license="MIT" #mandatory
+
+# issues な Issue Tracker の URL (任意だが推奨)
+# issueTrackerURL="https://github.com/YourUsername/YourRepo/issues" #optional
+
+# MODのウェブサイトやフォーラムのURL (任意)
+# displayURL="https://example.com/omikuzi-mod" #optional
+
+# [[mods]] ブロック: MOD自体の情報を記述
 [[mods]]
-modId="omikuzi"
-version="${version}"
-displayName="Omikuzi"
-description="Omikuzi mod"
-logoFile="examplemod.png"
-credits="The example mod team"
-authors="Example"
+
+# MODの固有ID (小文字英数字とアンダースコア推奨, build.gradle や Java コードと一致させる)
+modId="omikuzi" #mandatory
+
+# MODのバージョン (build.gradle の version プロパティから自動で置換される)
+version="${version}" #mandatory
+
+# MODリストに表示される名前
+displayName="Omikuzi" #mandatory
+
+# MODの説明 (もう少し詳しく書くことを推奨)
+description='''
+A simple mod that adds Omikuzi (fortune slips) to Minecraft.
+'''
+
+# MODリストに表示されるロゴ画像のファイル名 (src/main/resources 直下に配置)
+# "examplemod.png" を実際のファイル名に変更してください (例: omikuzi_logo.png)
+logoFile="examplemod.png" #optional
+
+# クレジット (貢献者など)
+# "The example mod team" を実際の情報に変更してください
+credits="Thanks to the Forge team and everyone who helped!" #optional
+
+# 作者名
+# "Example" をあなたの名前に変更してください
+authors="YourName" #optional
+
+# [[dependencies.omikuzi]] ブロック: このMODが依存する他のMODやシステムを記述
+[[dependencies.omikuzi]] #mandatory
+
+# 依存先のMOD ID (予約語)
+modId="forge" #mandatory
+# 依存が必須かどうか
+mandatory=true #mandatory
+# 要求するForgeのバージョン範囲 (loaderVersion と合わせるのが一般的)
+versionRange="[47,)" #mandatory
+# 読み込み順序 (通常は NONE)
+ordering="NONE"
+# クライアント側/サーバー側のどちらで必要か (BOTH が一般的)
+side="BOTH"
+
+[[dependencies.omikuzi]]
+modId="minecraft"
+mandatory=true
+# 要求するMinecraftのバージョン範囲
+versionRange="[1.20.1,1.20.2)" # 1.20.1 のみ対応の場合 (1.20.2 が出たら更新が必要)
+# または versionRange="[1.20.1]" とも書ける
+ordering="NONE"
+side="BOTH"
+
+# もし他のMOD (例: JEI) に依存する場合は、以下のように追記します
+#[[dependencies.omikuzi]]
+#    modId="jei"
+#    mandatory=false # false にすると、JEIがなくてもMODは動作する (連携機能が無効になるだけ)
+#    versionRange="[15.0.0.0,)" # 要求するJEIのバージョン範囲 (JEIのバージョンを確認して指定)
+#    ordering="AFTER" # JEIがロードされた後にこのMODがロードされるようにする (通常はNONEかAFTER)
+#    side="BOTH" # JEIは通常BOTHかCLIENT

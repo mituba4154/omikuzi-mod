@@ -1,72 +1,158 @@
+// build.gradle
+
 plugins {
     id 'java'
-    id 'net.minecraftforge.gradle.forge' version '6.6.2'
+    // settings.gradle で宣言した ForgeGradle プラグインをここで適用
+    id 'net.minecraftforge.gradle'
+
+    // もしKotlinを使うなら、ここで適用します
+    // id 'org.jetbrains.kotlin.jvm'
 }
 
-repositories {
-    gradlePluginPortal()
-    mavenCentral()
-    maven {
-        name = "MinecraftForge"
-        url = "https://maven.minecraftforge.net/"
-    }
-}
-
-group = 'com.example'
-version = '1.0'
+group = 'com.example.omikuzi' // あなたのパッケージ名に合わせて変更してください (例: net.yourname.omikuzi)
+version = '1.0.0' // バージョン番号
 
 java {
-    archivesBaseName = 'omikuzi'
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    archivesBaseName = 'omikuzi' // 生成されるJarファイル名のベース
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17)) // Java 17 を使用
 }
 
 minecraft {
+    // Minecraft と Forge のマッピングバージョンを指定
     mappings channel: 'official', version: '1.20.1'
 
+    // Access Transformer (必要ならコメント解除してパスを指定)
+    // accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // 実行構成
     runs {
         client {
             workingDirectory project.file('run')
-            jvmArg "-Dmixin.env.remapRefMap=true"
-            jvmArg "-Dmixin.env.refMapName=mixins.json"
+
+            // Recommended logging data for development
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            // Mixin を使う場合の JVM 引数 (使わないなら削除)
+            // jvmArg "-Dmixin.env.remapRefMap=true"
+            // jvmArg "-Dmixin.env.refMapName=omikuzi.mixins.refmap.json" // 適切なリファレンスマップ名に
+
+            // mods { // 開発環境で読み込むMODを指定 (必要なら)
+            //     omikuzi { // あなたの mod ID
+            //         source sourceSets.main
+            //     }
+            // }
         }
 
         server {
             workingDirectory project.file('run')
-            jvmArg "-Dmixin.env.remapRefMap=true"
-            jvmArg "-Dmixin.env.refMapName=mixins.json"
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            // Mixin を使う場合の JVM 引数 (使わないなら削除)
+            // jvmArg "-Dmixin.env.remapRefMap=true"
+            // jvmArg "-Dmixin.env.refMapName=omikuzi.mixins.refmap.json"
+
+            // mods {
+            //     omikuzi {
+            //         source sourceSets.main
+            //     }
+            // }
         }
 
+        // GameTest Server (使う場合)
+        // gameTestServer {
+        //     workingDirectory project.file('run')
+        //     property 'forge.logging.markers', 'REGISTRIES'
+        //     property 'forge.logging.console.level', 'debug'
+        // }
+
+        // データ生成タスク
         data {
             workingDirectory project.file('run')
-            jvmArg "-Dmixin.env.remapRefMap=true"
-            jvmArg "-Dmixin.env.refMapName=mixins.json"
-            args '--all', '--output', file('src/main/resources/data'), '--existing', file('src/main/resources/data')
+
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+
+            // Mixin を使う場合の JVM 引数 (使わないなら削除)
+            // jvmArg "-Dmixin.env.remapRefMap=true"
+            // jvmArg "-Dmixin.env.refMapName=omikuzi.mixins.refmap.json"
+
+            // データ生成の引数 (mods.toml の modid に合わせる)
+            args '--mod', 'omikuzi', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
 
+// データジェネレータの出力先をリソースとして含める
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+// 依存関係ライブラリのリポジトリ
 repositories {
-    mavenCentral()
+    // MinecraftForge Maven (Forge 本体や関連ライブラリ)
     maven {
+        name = "MinecraftForge" // 名前は任意
         url = "https://maven.minecraftforge.net/"
     }
-    maven {
-        url = "https://libraries.minecraft.net/"
-    }
+    // Maven Central (多くのJavaライブラリ)
+    mavenCentral()
+    // 他に必要なリポジトリがあればここに追加 (例: JEI, Curios など)
 }
 
 dependencies {
+    // Forge 本体への依存関係 (バージョンは MDK や必要に応じて調整)
     minecraft "net.minecraftforge:forge:1.20.1-47.2.20"
-    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20'
+
+    // もしKotlinを使うなら、Kotlin標準ライブラリへの依存関係を追加
+    // implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.20" // settings.gradle のバージョンと合わせる
+
+    // 他のMODやライブラリへの依存関係はここに追加
+    // implementation fg.deobf("mezz.jei:jei-1.20.1-forge:15.x.x.x") // 例: JEI
 }
 
-repositories {
-    gradlePluginPortal()
-}
-
-processResources {
-    inputs.property "version", project.version
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+// Jarファイル作成時の処理
+jar {
+    manifest {
+        attributes([
+                "Specification-Title"     : "omikuzi", // あなたのMOD名
+                "Specification-Vendor"    : "YourNameOrGroup", // あなたの名前やグループ名
+                "Specification-Version"   : "1", // 通常は "1"
+                "Implementation-Title"    : project.name,
+                "Implementation-Version"  : project.version,
+                "Implementation-Vendor"   : "YourNameOrGroup",
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
+
+// processResources タスク: mods.toml 内の変数を置換する
+processResources {
+    // build.gradle の version プロパティを mods.toml で ${version} として使えるようにする
+    inputs.property "version", project.version
+
+    // 複製するファイルを除外 (任意)
+    // from(sourceSets.main.resources.srcDirs) {
+    //     exclude 'META-INF/mods.toml'
+    // }
+
+    // META-INF/mods.toml ファイルを見つけて処理
+    filesMatching('META-INF/mods.toml') {
+        // expand メソッドでプレースホルダーを置換
+        expand([
+                "version": project.version
+        ])
+    }
+}
+
+// Javaコンパイルオプション (任意)
+// tasks.withType(JavaCompile).configureEach {
+//    options.encoding = 'UTF-8' // ソースファイルのエンコーディング
+// }
+
+// Kotlin を使う場合のコンパイルオプション (任意)
+// tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+//     kotlinOptions {
+//         jvmTarget = "17"
+//     }
+// }

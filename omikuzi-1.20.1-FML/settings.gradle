@@ -1,11 +1,27 @@
+// settings.gradle
+
 pluginManagement {
     repositories {
-        gradlePluginPortal()
-        mavenCentral()
+        // ForgeGradleプラグインを探す場所
         maven {
-            url = "https://maven.minecraftforge.net/"
+            url = 'https://maven.minecraftforge.net/'
         }
+        // 他のGradleプラグインを探す場所 (Javaプラグインなど)
+        gradlePluginPortal()
     }
 }
 
-rootProject.name = 'omikuzi'
+plugins {
+    // ForgeGradleプラグインのIDとバージョンを指定 (適用は build.gradle で行う)
+    // Forge 47.2.x に対応するバージョンを確認してください。執筆時点では 6.0.29 が一般的ですが、
+    // 最新の MDK (Mod Development Kit) を確認するのが確実です。
+    id 'net.minecraftforge.gradle' version '6.0.29' apply false
+
+    // もしKotlinを使うなら、ここで宣言します (バージョンは適宜調整)
+    // id 'org.jetbrains.kotlin.jvm' version '1.9.20' apply false
+}
+
+// プロジェクト名 (任意ですが、設定推奨)
+rootProject.name = 'omikuzi-mod'
+
+// include 'subproject' // マルチプロジェクト構成にする場合
