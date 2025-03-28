@@ -1,0 +1,12 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+
+[[mods]]
+modId="omikuzi"
+version="${version}"
+displayName="Omikuzi"
+description="Omikuzi mod"
+logoFile="examplemod.png"
+credits="The example mod team"
+authors="Example"
