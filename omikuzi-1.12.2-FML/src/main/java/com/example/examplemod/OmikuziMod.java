@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = OmikuziMod.MODID, name = OmikuziMod.NAME, version = OmikuziMod.VERSION, acceptedMinecraftVersions = "[1.12.2]")
 public class OmikuziMod {
-    public static final String MODID = "omikuzimod";
+    public static final String MODID = "omikuziMod";
     public static final String NAME = "Omikuzi-FML";
     public static final String VERSION = "Alpha-0.2";
 
@@ -32,29 +32,13 @@ public class OmikuziMod {
         @Override
         @SideOnly(Side.CLIENT)
         public ItemStack getTabIconItem() {
-            return new ItemStack(OMIKUZI_MOD_ITEM);
+            return new ItemStack(ItemOmikuzi.instance);
         }
     };
 
     // アイテムのインスタンスを静的フィールドとして定義
-    public static final Item OMIKUZI_MOD_ITEM = new ItemOmikuzi();
-    public static final Item HUNDRED_YEN_ITEM = new ItemHundredYen();
-
-    public static class ItemOmikuzi extends Item {
-        public ItemOmikuzi() {
-            setRegistryName(MODID, "omikuzi");
-            setUnlocalizedName("omikuzi");
-            setCreativeTab(OMIKUZI_TAB);
-        }
-    }
-
-    public static class ItemHundredYen extends Item {
-        public ItemHundredYen() {
-            setRegistryName(MODID, "100yen");
-            setUnlocalizedName("100yen");
-            setCreativeTab(OMIKUZI_TAB);
-        }
-    }
+    public static ItemOmikuzi OMIKUZI_MOD_ITEM;
+    public static ItemHundredYen HUNDRED_YEN_ITEM;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -76,17 +60,17 @@ public class OmikuziMod {
     @SubscribeEvent
     public void registerItems(Register<Item> event) {
         event.getRegistry().registerAll(
-                OMIKUZI_MOD_ITEM,
-                HUNDRED_YEN_ITEM
+                ItemOmikuzi.instance,
+                ItemHundredYen.instance
         );
     }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void registerModels(ModelRegistryEvent event) {
-        ModelLoader.setCustomModelResourceLocation(OMIKUZI_MOD_ITEM, 0,
+        ModelLoader.setCustomModelResourceLocation(ItemOmikuzi.instance, 0,
                 new ModelResourceLocation(MODID + ":omikuzi", "inventory"));
-        ModelLoader.setCustomModelResourceLocation(HUNDRED_YEN_ITEM, 0,
+        ModelLoader.setCustomModelResourceLocation(ItemHundredYen.instance, 0,
                 new ModelResourceLocation(MODID + ":100yen", "inventory"));
     }
 }
