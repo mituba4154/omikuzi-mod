@@ -1,5 +1,3 @@
-// build.gradle
-
 plugins {
     id 'java'
     // settings.gradle で宣言した ForgeGradle プラグインをここで適用
@@ -10,7 +8,7 @@ plugins {
 }
 
 group = 'com.example.omikuzi' // あなたのパッケージ名に合わせて変更してください (例: net.yourname.omikuzi)
-version = '1.0.0' // バージョン番号
+version = '0.1β' // バージョン番号
 
 java {
     archivesBaseName = 'omikuzi' // 生成されるJarファイル名のベース
@@ -37,11 +35,11 @@ minecraft {
             // jvmArg "-Dmixin.env.remapRefMap=true"
             // jvmArg "-Dmixin.env.refMapName=omikuzi.mixins.refmap.json" // 適切なリファレンスマップ名に
 
-            // mods { // 開発環境で読み込むMODを指定 (必要なら)
-            //     omikuzi { // あなたの mod ID
-            //         source sourceSets.main
-            //     }
-            // }
+            mods { // 開発環境で読み込むMODを指定 (必要ならコメント解除)
+                omikuzi { // あなたの mod ID
+                    source sourceSets.main
+                }
+            }
         }
 
         server {
@@ -54,11 +52,11 @@ minecraft {
             // jvmArg "-Dmixin.env.remapRefMap=true"
             // jvmArg "-Dmixin.env.refMapName=omikuzi.mixins.refmap.json"
 
-            // mods {
-            //     omikuzi {
-            //         source sourceSets.main
-            //     }
-            // }
+            mods {
+                omikuzi {
+                    source sourceSets.main
+                }
+            }
         }
 
         // GameTest Server (使う場合)
@@ -116,7 +114,7 @@ jar {
     manifest {
         attributes([
                 "Specification-Title"     : "omikuzi", // あなたのMOD名
-                "Specification-Vendor"    : "YourNameOrGroup", // あなたの名前やグループ名
+                "Specification-Vendor"    : "mituba", // あなたの名前やグループ名
                 "Specification-Version"   : "1", // 通常は "1"
                 "Implementation-Title"    : project.name,
                 "Implementation-Version"  : project.version,
@@ -145,10 +143,10 @@ processResources {
     }
 }
 
-// Javaコンパイルオプション (任意)
-// tasks.withType(JavaCompile).configureEach {
-//    options.encoding = 'UTF-8' // ソースファイルのエンコーディング
-// }
+// Javaコンパイルオプション
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // ソースファイルのエンコーディングをUTF-8に設定
+}
 
 // Kotlin を使う場合のコンパイルオプション (任意)
 // tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
