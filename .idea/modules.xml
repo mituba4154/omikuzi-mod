@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.example.omikuzi.omikuzi-mod.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.example.omikuzi.omikuzi-mod.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.example.omikuzi.omikuzi-mod.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.example.omikuzi.omikuzi-mod.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/omikuzi-1.12.2-FML.main.iml" filepath="$PROJECT_DIR$/.idea/modules/omikuzi-1.12.2-FML.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/omikuzi-1.12.2-FML.test.iml" filepath="$PROJECT_DIR$/.idea/modules/omikuzi-1.12.2-FML.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/omikuzi-mod.iml" filepath="$PROJECT_DIR$/.idea/omikuzi-mod.iml" />
