@@ -1,0 +1,72 @@
+plugins {
+    id 'java'
+    id 'net.minecraftforge.gradle.forge' version '6.6.2'
+}
+
+repositories {
+    gradlePluginPortal()
+    mavenCentral()
+    maven {
+        name = "MinecraftForge"
+        url = "https://maven.minecraftforge.net/"
+    }
+}
+
+group = 'com.example'
+version = '1.0'
+
+java {
+    archivesBaseName = 'omikuzi'
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+}
+
+minecraft {
+    mappings channel: 'official', version: '1.20.1'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            jvmArg "-Dmixin.env.remapRefMap=true"
+            jvmArg "-Dmixin.env.refMapName=mixins.json"
+        }
+
+        server {
+            workingDirectory project.file('run')
+            jvmArg "-Dmixin.env.remapRefMap=true"
+            jvmArg "-Dmixin.env.refMapName=mixins.json"
+        }
+
+        data {
+            workingDirectory project.file('run')
+            jvmArg "-Dmixin.env.remapRefMap=true"
+            jvmArg "-Dmixin.env.refMapName=mixins.json"
+            args '--all', '--output', file('src/main/resources/data'), '--existing', file('src/main/resources/data')
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url = "https://maven.minecraftforge.net/"
+    }
+    maven {
+        url = "https://libraries.minecraft.net/"
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:1.20.1-47.2.20"
+    implementation 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.20'
+}
+
+repositories {
+    gradlePluginPortal()
+}
+
+processResources {
+    inputs.property "version", project.version
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version
+    }
+}

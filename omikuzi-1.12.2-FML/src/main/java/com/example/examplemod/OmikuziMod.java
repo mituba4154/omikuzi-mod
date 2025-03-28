@@ -37,19 +37,19 @@ public class OmikuziMod {
     };
 
     // アイテムのインスタンスを静的フィールドとして定義
-    public static final Item OMIKUZI_MOD_ITEM = new OmikuziModItem();
-    public static final Item HUNDRED_YEN_ITEM = new HundredYenItem();
+    public static final Item OMIKUZI_MOD_ITEM = new ItemOmikuzi();
+    public static final Item HUNDRED_YEN_ITEM = new ItemHundredYen();
 
-    public static class OmikuziModItem extends Item {
-        public OmikuziModItem() {
+    public static class ItemOmikuzi extends Item {
+        public ItemOmikuzi() {
             setRegistryName(MODID, "omikuzi");
             setUnlocalizedName("omikuzi");
             setCreativeTab(OMIKUZI_TAB);
         }
     }
 
-    public static class HundredYenItem extends Item {
-        public HundredYenItem() {
+    public static class ItemHundredYen extends Item {
+        public ItemHundredYen() {
             setRegistryName(MODID, "100yen");
             setUnlocalizedName("100yen");
             setCreativeTab(OMIKUZI_TAB);

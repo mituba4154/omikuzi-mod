@@ -2,9 +2,9 @@ package com.example.examplemod;
 
 import net.minecraft.item.Item;
 
-public class ItemOmikuzimod extends Item {
+public class ItemOmikuzi extends Item {
 
-    public ItemOmikuzimod() {
+    public ItemOmikuzi() {
         super();
         // レジストリに保存する名称を登録する。大文字禁止。
         this.setRegistryName(OmikuziMod.MODID, "omikuzi");
